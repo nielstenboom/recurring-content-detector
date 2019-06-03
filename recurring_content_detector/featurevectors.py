@@ -5,7 +5,7 @@ import config
 import pickle
 import numpy as np
 from math import sqrt
-import keras_rmac.rmac
+# import keras_rmac.rmac
 
 def get_frame(frame_index, video):
     """
@@ -83,10 +83,11 @@ def color_hist(img):
     result = get_img_color_hist(img, 100)
     return result
 
-def construct_feature_vectors(video_fn, series_dir, result_dir_name, vector_function):
-    fullpath = os.path.join(series_dir,video_fn)
-    video = cv2.VideoCapture(fullpath)
-    vectors_fn = os.path.join(series_dir, result_dir_name, video_fn + ".p")
+def construct_feature_vectors(video_fn, result_dir_name, vector_function):
+    base_video_fn = os.path.basename(video_fn)
+    video = cv2.VideoCapture(video_fn)
+    series_dir = os.path.dirname(video_fn)
+    vectors_fn = os.path.join(series_dir, result_dir_name, base_video_fn + ".p")
 
     # make sure folder of experimentname exists or create otherwise
     os.makedirs(os.path.dirname(vectors_fn), exist_ok=True)

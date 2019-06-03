@@ -3,24 +3,22 @@ import os
 import subprocess
 import ffmpeg
 import os.path
+import config
 
-video_input_dir = './videos_resized_w320/'
-video_output_dir = './videos_resized_w224/'
+def resize(input, output):
+    """
+    Resizes a video with ffmpeg
+    """
+    video2 = cv2.VideoCapture(input)
+    framecount = int(video2.get(cv2.CAP_PROP_FRAME_COUNT))
 
-# loops through the videos and resizes them with ffmpeg
-for f in os.listdir(video_input_dir):
-    if '.mp4' in f:
-        video2 = cv2.VideoCapture(video_input_dir+f)
-        framecount = int(video2.get(cv2.CAP_PROP_FRAME_COUNT))
-        fps = video2.get(cv2.CAP_PROP_FPS)
-        
-        if framecount > 0 and not os.path.isfile(video_output_dir + f):
-            print(f)
-            try:
-                stream = ffmpeg.input("./videos/{}".format(f))
-                stream = ffmpeg.filter(stream, 'scale', w=224, h=224)
-#                 stream = ffmpeg.filter(stream, 'scale', w=224, h="trunc(ow/a/2)*2")
-                stream = ffmpeg.output(stream, video_output_dir + f)
-                ffmpeg.run(stream)
-            except Exception as e:
-                print(e.stdout)
+    if framecount > 0:
+        stream = ffmpeg.input(input)
+        if config.RESIZE_WIDTH == 224:
+            stream = ffmpeg.filter(stream, 'scale', w=224, h=224)
+        else:
+            stream = ffmpeg.filter(stream, 'scale', w=config.RESIZE_WIDTH, h="trunc(ow/a/2)*2")
+        stream = ffmpeg.output(stream, output)
+        ffmpeg.run(stream)
+    else:
+        raise Exception("Something is wrong with the video file: {}".format(input))

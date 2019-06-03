@@ -1,6 +1,20 @@
 import os
+import config
+import featurevectors
+import video_functions
+import cv2
 
-series_dir = "./videos_resized_w320/"
-files = [f for f in os.listdir(series_dir) if os.path.isfile(os.path.join(series_dir, f))]
+files = [f for f in os.listdir(config.VIDEO_DIR) if os.path.isfile(os.path.join(config.VIDEO_DIR, f))]
+
 for file in files:
-    construct_feature_vectors(file, series_dir, "color_histogram_binsize300_framejump{}".format(framejump), color_hist)
+    file_full = os.path.join(config.VIDEO_DIR, file)
+    file_resized = os.path.join(config.VIDEO_DIR, "resized", file)
+
+    # make sure folder of experimentname exists or create otherwise
+    os.makedirs(os.path.dirname(file_resized), exist_ok=True)
+    
+    if not os.path.isfile(file_resized):
+        video_functions.resize(file_full, file_resized)
+
+    featurevectors.construct_feature_vectors(   
+        file_resized, "feature_vectors_framejump{}".format(config.FRAMEJUMP), featurevectors.color_hist)
