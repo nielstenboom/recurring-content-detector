@@ -5,6 +5,15 @@ import ffmpeg
 import os.path
 import config
 
+def get_framerate(video_fn):
+    """
+    Return the video framerate given a video filename
+    """
+    video = cv2.VideoCapture(video_fn)
+    return video.get(cv2.CAP_PROP_FPS)
+
+
+
 def resize(input, output):
     """
     Resizes a video with ffmpeg

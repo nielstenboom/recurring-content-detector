@@ -3,9 +3,12 @@
 FRAMEJUMP = 3
 
 # The directory where the videos reside
-VIDEO_DIR = "C:/Users/niels/Dropbox/0_Studie/Master Thesis/recurring-content-detector/recurring_content_detector/test"
+VIDEO_DIR = "./test"
 
-# width of video to resize to
+# width of video to resize to, any width other than 224 will keep the aspect ratio intact
 RESIZE_WIDTH = 224
+
+# percentile of the lowest values in the vector results to mark as detections
+PERCENTILE = 10
 
 

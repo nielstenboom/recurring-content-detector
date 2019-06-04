@@ -108,5 +108,3 @@ def construct_feature_vectors(video_fn, result_dir_name, vector_function):
         # save to pickle file
         with open(vectors_fn, 'wb') as handle:
             pickle.dump(feature_vectors, handle, protocol=2)
-
-    print("done!")
