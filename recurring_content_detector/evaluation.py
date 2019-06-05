@@ -1,5 +1,65 @@
+import math
+import pandas as pd
+
+def overlap(interval1, interval2):
+    """
+    Returns the total amount of overlap between two intervals in the format of (x,y)
+
+    Example:
+        input:      (0,10) , (5,10)
+        returns:    5  
+    """
+    return max(0, min(interval1[1], interval2[1]) - max(interval1[0], interval2[0]))
+
+def sum_timestamps(timestamps):
+    """
+    Get the toal number of seconds out of a list with timestamps formatted like: (start,end)
+    """
+    result = 0
+    for start,end in timestamps:
+        result += end - start
+        
+    return result
+
+# matches two lists of (starttime,endtime) detections and outputs the relevancy variables
+def match_detections_precision_recall(detected, ground_truth, verbose=False):
+    
+    if verbose:
+        print("Comparing detections")
+        print("detected: \t \t {}".format(detected))
+        print("ground truth: \t \t {}".format(ground_truth))
 
 
+    total_relevant_seconds = sum_timestamps(ground_truth)
+    total_detected_seconds = sum_timestamps(detected)
+    relevant_detected_seconds = 0    
+
+    for start, end in ground_truth:
+        lowest_difference_index = 0
+        lowest_difference = -1        
+
+        for i, (start_d, end_d) in enumerate(detected):
+  
+            if abs(start - start_d) < 2:
+                start_d = start
+            if abs(end - end_d) < 2:
+                end_d = end
+
+            relevant = overlap((start,end), (start_d, end_d))
+            relevant_detected_seconds += relevant
+    
+    if verbose:
+        print("total relevant seconds: {}".format(total_relevant_seconds)) #relevant documents
+        print("total detected seconds: {}".format(total_detected_seconds)) #retrieved documents
+        print("relevant detected seconds: {}".format(relevant_detected_seconds)) #relevant documents AND retrieved documents
+
+        if total_detected_seconds > 0:
+            print("Precision = {}".format(relevant_detected_seconds / total_detected_seconds))
+
+        if total_relevant_seconds > 0:
+            print("Recall = {}".format(relevant_detected_seconds / total_relevant_seconds))
+
+    return total_relevant_seconds, total_detected_seconds, relevant_detected_seconds
 
 def merge_consecutive_timestamps(timestamps):
     """
@@ -27,7 +87,6 @@ def merge_consecutive_timestamps(timestamps):
         i += 1
 
     return result
-
 
 def to_seconds(time):
     """
@@ -59,8 +118,8 @@ def get_skippable_timestamps_by_filename(filename, df):
         
     return merge_consecutive_timestamps(result)
 
-def get_annotations():
-    annotations = pd.read_csv("annotations_legal_new_final.csv").dropna(how='all')
+def get_annotations(filename):
+    annotations = pd.read_csv(filename).dropna(how='all')
     annotations['recap_start'] = annotations['recap_start'].apply(to_seconds)
     annotations['recap_end'] = annotations['recap_end'].apply(to_seconds)
     annotations['openingcredits_end'] = annotations['openingcredits_end'].apply(to_seconds)
@@ -70,3 +129,4 @@ def get_annotations():
     annotations['closingcredits_end'] = annotations['closingcredits_end'].apply(to_seconds)
     annotations['closingcredits_start'] = annotations['closingcredits_start'].apply(to_seconds)
     return annotations
+
