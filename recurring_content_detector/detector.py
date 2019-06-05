@@ -3,14 +3,14 @@ import itertools
 import operator
 import numpy as np
 import pickle
-import faiss
+# import faiss
 import datetime
 
 # internal imports
-import config
-import featurevectors
-import video_functions
-import evaluation
+from . import config
+from . import featurevectors
+from . import video_functions
+from . import evaluation
 
 def max_two_values(d):
     """ 
@@ -218,4 +218,4 @@ def detect(video_dir, annotations = None):
     
     return all_detections
 
-print(detect("./test", "annotations.csv"))
+# print(detect("./test"))

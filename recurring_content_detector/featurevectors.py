@@ -1,11 +1,12 @@
 import os
 import cv2
 from tqdm import tqdm
-import config
 import pickle
 import numpy as np
 from math import sqrt
-# import keras_rmac.rmac
+
+from . import config
+# import .keras_rmac.rmac
 
 def get_frame(frame_index, video):
     """

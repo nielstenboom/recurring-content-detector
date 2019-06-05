@@ -3,7 +3,8 @@ import os
 import subprocess
 import ffmpeg
 import os.path
-import config
+
+from . import config
 
 def get_framerate(video_fn):
     """
