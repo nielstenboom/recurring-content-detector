@@ -130,6 +130,7 @@ def detect(video_dir, annotations = None):
 
     results = []
     for i, length in enumerate(lengths):
+        print("Querying {}".format(videos[i]))
         i += 1
         s = sum(lengths[:i-1])
         e = sum(lengths[:i])

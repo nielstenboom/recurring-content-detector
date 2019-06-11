@@ -92,6 +92,14 @@ def construct_feature_vectors(video_fn, result_dir_name, vector_function):
     series_dir = os.path.dirname(video_fn)
     vectors_fn = os.path.join(series_dir, result_dir_name, base_video_fn + ".p")
 
+    # set correct vector function to apply
+    if vector_function == "CH":
+        vector_function = color_hist
+    elif vector_function == "CTM":
+        vector_function = color_texture_moments
+    elif vector_function == "CNN":
+        vector_function = cnn_feature_vectors
+
     # make sure folder of experimentname exists or create otherwise
     os.makedirs(os.path.dirname(vectors_fn), exist_ok=True)
 
