@@ -12,6 +12,9 @@ from . import featurevectors
 from . import video_functions
 from . import evaluation
 
+resized_dir_name = "resized{}".format(config.RESIZE_WIDTH)
+feature_vectors_dir_name = "feature_vectors_framejump{}".format(config.FRAMEJUMP)
+
 def max_two_values(d):
     """ 
     a) create a list of the dict's keys and values; 
@@ -91,7 +94,7 @@ def detect(video_dir, annotations = None):
     # the video files used for the detection
     videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
     # location of the vector directory
-    vectors_dir = os.path.join(video_dir, "resized", "feature_vectors_framejump{}".format(config.FRAMEJUMP))
+    vectors_dir = os.path.join(video_dir, resized_dir_name, feature_vectors_dir_name)
 
     # if there's an annotations file, get the pandas format
     if annotations is not None:
@@ -100,7 +103,7 @@ def detect(video_dir, annotations = None):
     for file in videos:
         # set the video path files
         file_full = os.path.join(video_dir, file)
-        file_resized = os.path.join(video_dir, "resized{}".format(config.RESIZE_WIDTH), file)
+        file_resized = os.path.join(video_dir, resized_dir_name, file)
 
         # make sure folder of experimentname exists or create otherwise
         os.makedirs(os.path.dirname(file_resized), exist_ok=True)
@@ -111,7 +114,7 @@ def detect(video_dir, annotations = None):
 
         # from the resized video, construct feature vectors
         featurevectors.construct_feature_vectors(   
-            file_resized, "feature_vectors_framejump{}".format(config.FRAMEJUMP), config.FEATURE_VECTOR_FUNCTION)
+            file_resized, feature_vectors_dir_name, config.FEATURE_VECTOR_FUNCTION)
 
 
     vector_files = [os.path.join(vectors_dir,e+'.p') for e in videos]
