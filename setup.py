@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='recurring content detector',
       version='0.1',
@@ -7,7 +7,7 @@ setup(name='recurring content detector',
       author='Niels ten Boom',
       author_email='nielstenboom@gmail.com',
       license='MIT',
-      packages=['recurring_content_detector'],
+      packages=find_packages(),
       install_requires=[
           'Keras',
           'Pillow',
