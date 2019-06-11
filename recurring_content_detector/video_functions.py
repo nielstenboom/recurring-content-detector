@@ -13,8 +13,6 @@ def get_framerate(video_fn):
     video = cv2.VideoCapture(video_fn)
     return video.get(cv2.CAP_PROP_FPS)
 
-
-
 def resize(input, output):
     """
     Resizes a video with ffmpeg

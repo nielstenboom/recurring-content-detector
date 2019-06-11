@@ -1,6 +1,6 @@
 # Recurring content detector / credits detector
 
-This repository contains the code that was used to conduct experiments for a master's thesis LINK.
+This repository contains the code that was used to conduct experiments for a master's thesis LINK TODO.
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 

@@ -83,6 +83,10 @@ def detect(video_dir, annotations = None):
 
     video_dir is the variable that should have the folder location of one season of video files.
     if annotations is given then it will evaluate the detections with the annotations.
+
+    returns:
+        dictionary with timestamp detections in seconds list for every video file name
+        result[video_filename] = [(start1, end1), (start2, end2)]
     """
     # the video files used for the detection
     videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
@@ -96,7 +100,7 @@ def detect(video_dir, annotations = None):
     for file in videos:
         # set the video path files
         file_full = os.path.join(video_dir, file)
-        file_resized = os.path.join(video_dir, "resized", file)
+        file_resized = os.path.join(video_dir, "resized{}".format(config.RESIZE_WIDTH), file)
 
         # make sure folder of experimentname exists or create otherwise
         os.makedirs(os.path.dirname(file_resized), exist_ok=True)
@@ -107,7 +111,7 @@ def detect(video_dir, annotations = None):
 
         # from the resized video, construct feature vectors
         featurevectors.construct_feature_vectors(   
-            file_resized, "feature_vectors_framejump{}".format(config.FRAMEJUMP), featurevectors.color_hist)
+            file_resized, "feature_vectors_framejump{}".format(config.FRAMEJUMP), config.FEATURE_VECTOR_FUNCTION)
 
 
     vector_files = [os.path.join(vectors_dir,e+'.p') for e in videos]
