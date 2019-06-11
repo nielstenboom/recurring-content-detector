@@ -6,7 +6,7 @@ The experiments done in the master's thesis were done in the jupyter notebooks, 
 
 MAKE SURE THE VIDEO FILES YOU USE THIS ARE IN THE RIGHT ALPHABETICAL ORDER BASED ON WHEN THEY PLAY IN THE SEASON. You'll get weird results if it does not. So episode 1 above episode 2 etc.
 
-Credits to:
+This project uses / credits to:
 - https://github.com/noagarcia/keras_rmac for the CNN vectors 
 - https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
 
@@ -24,12 +24,6 @@ pip install .
 
 Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that tensorflow is installed.
 
-Then you can run the detector in a python program in the following way:
-
-```
-import recurring_content_detector as rcd
-rcd.detect("/directory/with/season/videofiles")
-```
 
 #### Instructions to run with different parameters
 
@@ -42,10 +36,6 @@ If for some reason you want the program to run with different parameters or chan
 - Install faiss and mkl as described above
 - the detector is now ready to be used within your project
 
-```
-import recurring_content_detector as rcd
-rcd.detect("/directory/with/season/videofiles")
-```
 
 ## Recurring content detection
 
@@ -54,6 +44,15 @@ With this code it is possible to detect recaps, opening credits, closing credits
 <p align="center">
 <img src="images/thesisdiagram.png?raw=true">
 </p>
+
+If the installation was succesful then you can run the detector in a python program in the following way:
+
+```
+import recurring_content_detector as rcd
+rcd.detect("/directory/with/season/videofiles")
+```
+It will take some time as video processing takes quite some resources. An application in production should run it in parallel.
+
 
 ## Annotations
 
