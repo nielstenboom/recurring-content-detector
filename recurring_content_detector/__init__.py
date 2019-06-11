@@ -1,5 +1,5 @@
 from . import detector
 
 def detect(video_dir, annotations = None):
-    detector.detect(video_dir, annotations)
+    return detector.detect(video_dir, annotations)
 

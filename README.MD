@@ -4,6 +4,8 @@ This repository contains the code that was used to conduct experiments for a mas
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 
+MAKE SURE THE VIDEO FILES YOU USE THIS ARE IN THE RIGHT ALPHABETICAL ORDER BASED ON WHEN THEY PLAY IN THE SEASON. you'll get weird results if it does not. So episode 1 above episode 2 etc.
+
 # Installation
 
 Clone the code somewhere you prefer. Then do the following steps (assuming you have an anaconda setup) if you want to run the program with the default settings:
