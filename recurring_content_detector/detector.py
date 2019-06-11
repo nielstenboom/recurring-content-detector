@@ -110,9 +110,11 @@ def detect(video_dir, annotations = None):
         
         # if there is no resized video yet, then resize it
         if not os.path.isfile(file_resized):
+            print("Resizing {}".format(file))
             video_functions.resize(file_full, file_resized)
 
         # from the resized video, construct feature vectors
+        print("Converting {} to feature vectors".format(file))
         featurevectors.construct_feature_vectors(   
             file_resized, feature_vectors_dir_name, config.FEATURE_VECTOR_FUNCTION)
 
