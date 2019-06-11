@@ -22,4 +22,6 @@ And make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable.
 
 With this code it is possible to detect recaps, opening credits, closing credits and previews up to a certain extent. The following image gives a schematic overview of how it works: 
 
+<p align="center">
 ![Schematic overview](images/thesisdiagram.png?raw=true "Diagram")
+</p>
