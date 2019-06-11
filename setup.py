@@ -8,6 +8,7 @@ setup(name='recurring content detector',
       author_email='nielstenboom@gmail.com',
       license='MIT',
       packages=find_packages(),
+      include_package_data = True,
       install_requires=[
           'Keras',
           'Pillow',
