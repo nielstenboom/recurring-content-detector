@@ -6,6 +6,10 @@ The experiments done in the master's thesis were done in the jupyter notebooks, 
 
 MAKE SURE THE VIDEO FILES YOU USE THIS ARE IN THE RIGHT ALPHABETICAL ORDER BASED ON WHEN THEY PLAY IN THE SEASON. You'll get weird results if it does not. So episode 1 above episode 2 etc.
 
+Credits to:
+https://github.com/noagarcia/keras_rmac for the CNN vectors
+https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors
+
 # Installation
 
 Clone the code somewhere you prefer. Then do the following steps (assuming you have an anaconda setup) if you want to run the program with the default settings:
