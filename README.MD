@@ -47,3 +47,11 @@ With this code it is possible to detect recaps, opening credits, closing credits
 <p align="center">
 <img src="images/thesisdiagram.png?raw=true">
 </p>
+
+## Annotations
+
+If you want to quantitively test out how well this works on your own data, fill in the [annotations](annotations_example.csv) file and supply it as the second parameter.
+```
+rcd.detect("/directory/with/season/videofiles", annotations = "path/to/annotations.csv")
+```
+ When the program is done, it will output precision and recall scores based on the supplied annotations.
