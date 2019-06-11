@@ -230,7 +230,7 @@ def detect(video_dir, annotations = None):
         print("Total precision = {0:.3f}".format(precision))
         print("Total recall = {0:.3f}".format(recall))
 
-    
+    print(all_detections)
     return all_detections
 
 # print(detect("./test"))
