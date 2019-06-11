@@ -8,7 +8,7 @@ from math import sqrt
 from . import config
 
 if config.FEATURE_VECTOR_FUNCTION == "CNN":
-    import .keras_rmac.rmac
+    import keras_rmac.rmac
 
 def get_frame(frame_index, video):
     """
