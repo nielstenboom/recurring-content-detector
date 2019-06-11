@@ -231,5 +231,3 @@ def detect(video_dir, annotations = None):
         print("Total recall = {0:.3f}".format(recall))
 
     return all_detections
-
-# print(detect("./test"))
