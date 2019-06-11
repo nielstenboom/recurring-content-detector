@@ -3,7 +3,7 @@ import itertools
 import operator
 import numpy as np
 import pickle
-# import faiss
+import faiss
 import datetime
 
 # internal imports
