@@ -18,7 +18,7 @@ pip install mkl
 pip install .
 ```
 
-Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable.
+Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that tensorflow is installed.
 
 Then you can run the detector in a python program in the following way:
 
