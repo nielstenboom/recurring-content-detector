@@ -12,6 +12,7 @@ Clone the code somewhere you prefer. Then do the following steps (assuming you h
 
 ```
 cd recurring_content_detector
+wget -P recurring_content_detector/keras_rmac/data https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_th_dim_ordering_th_kernels.h5
 conda install faiss-cpu -c pytorch
 pip install mkl
 pip install .
