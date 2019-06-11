@@ -78,6 +78,12 @@ def to_time_string(seconds):
 
 
 def detect(video_dir, annotations = None):
+    """
+    The main function to call to detect recurring content. 
+
+    video_dir is the variable that should have the folder location of one season of video files.
+    if annotations is given then it will evaluate the detections with the annotations.
+    """
     # the video files used for the detection
     videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
     # location of the vector directory
@@ -167,6 +173,7 @@ def detect(video_dir, annotations = None):
         detected_beginning = []
         detected_end = []
 
+        # loop through all the detections taking start and endpoint into account
         for nonzero in nonzeros:
             start = nonzero[0]
             end = nonzero[-1]
