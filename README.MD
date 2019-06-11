@@ -10,8 +10,10 @@ Clone the code somewhere you prefer. Then do the following steps (assuming you h
 
 ```
 cd recurring_content_detector
-pip install .
 conda install faiss-cpu -c pytorch
+pip install mkl
+pip install .
+
 ```
 
 And make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable.
