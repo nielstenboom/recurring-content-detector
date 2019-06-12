@@ -92,7 +92,7 @@ def detect(video_dir, annotations = None):
         result[video_filename] = [(start1, end1), (start2, end2)]
     """
     # the video files used for the detection
-    videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
+    videos = sorted([f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))])
     # location of the vector directory
     vectors_dir = os.path.join(video_dir, resized_dir_name, feature_vectors_dir_name)
 

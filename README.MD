@@ -8,7 +8,7 @@ This project uses / credits to:
 - https://github.com/noagarcia/keras_rmac for the CNN vectors 
 - https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
 
-# Installation
+## Installation
 
 Clone the code somewhere you prefer. Then do the following steps (assuming you have an anaconda setup) if you want to run the program with the default settings:
 
@@ -17,23 +17,13 @@ cd recurring-content-detector
 wget -P recurring_content_detector/keras_rmac/data https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_th_dim_ordering_th_kernels.h5
 conda install faiss-cpu -c pytorch
 pip install mkl
+(optional: change parameters in recurring_content_detector/config.py)
 pip install .
 ```
 
-Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that tensorflow is installed.
+Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that [tensorflow](https://www.tensorflow.org/install/pip) is installed.
 
-
-#### Instructions to run with different parameters
-
-If for some reason you want the program to run with different parameters or changed code, you can take the following steps:
-
-- Clone the code somewhere you like.
-- Copy the directory recurring-content-detector/recurring_content_detector to your project.
-- Change code / parameters (residing in config.py)
-- from within the directory run `pip install -r requirements.txt`
-- Install faiss and mkl as described above
-- the detector is now ready to be used within your project
-
+Do `pip uninstall recurring-content-detector` to uninstall the package.
 
 ## Recurring content detection
 
