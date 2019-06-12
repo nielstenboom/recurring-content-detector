@@ -4,8 +4,6 @@ This repository contains the code that was used to conduct experiments for a mas
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 
-MAKE SURE THE VIDEO FILES YOU USE THIS ARE IN THE RIGHT ALPHABETICAL ORDER BASED ON WHEN THEY PLAY IN THE SEASON. You'll get weird results if it does not. So episode 1 above episode 2 etc.
-
 This project uses / credits to:
 - https://github.com/noagarcia/keras_rmac for the CNN vectors 
 - https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
@@ -15,7 +13,7 @@ This project uses / credits to:
 Clone the code somewhere you prefer. Then do the following steps (assuming you have an anaconda setup) if you want to run the program with the default settings:
 
 ```
-cd recurring_content_detector
+cd recurring-content-detector
 wget -P recurring_content_detector/keras_rmac/data https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_th_dim_ordering_th_kernels.h5
 conda install faiss-cpu -c pytorch
 pip install mkl
@@ -51,6 +49,9 @@ If the installation was succesful then you can run the detector in a python prog
 import recurring_content_detector as rcd
 rcd.detect("/directory/with/season/videofiles")
 ```
+
+Make sure the video files you used are in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
+
 It will take some time as video processing takes quite some resources. An application in production should run it in parallel.
 
 
