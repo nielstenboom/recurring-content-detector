@@ -104,18 +104,22 @@ def to_seconds(time):
             return -1
 
 def get_skippable_timestamps_by_filename(filename, df):
-    row = df.loc[df['filename'] == filename].to_dict(orient='records')[0]
     result = []
-    
-    if not row["recap_start"] == -1:
-        result.append((row["recap_start"], row["recap_end"]))
-    if not row["openingcredits_start"] == -1:
-        result.append((row["openingcredits_start"], row["openingcredits_end"]))
-    if not row["preview_start"] == -1:
-        result.append((row["preview_start"], row["preview_end"]))
-    if not row["closingcredits_start"] == -1:
-        result.append((row["closingcredits_start"], row["closingcredits_end"]))
+    try:
+        row = df.loc[df['filename'] == filename].to_dict(orient='records')[0]
         
+        if not row["recap_start"] == -1:
+            result.append((row["recap_start"], row["recap_end"]))
+        if not row["openingcredits_start"] == -1:
+            result.append((row["openingcredits_start"], row["openingcredits_end"]))
+        if not row["preview_start"] == -1:
+            result.append((row["preview_start"], row["preview_end"]))
+        if not row["closingcredits_start"] == -1:
+            result.append((row["closingcredits_start"], row["closingcredits_end"]))
+    except:
+        raise Exception(
+            "Something went wrong when getting the annotations for: {} \n Make sure the annotations are there in the correct format".format(filename))
+
     return merge_consecutive_timestamps(result)
 
 def get_annotations(filename):

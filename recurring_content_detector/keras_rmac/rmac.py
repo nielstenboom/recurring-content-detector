@@ -83,13 +83,22 @@ def rmac(input_shape, num_rois):
 
 
 # Load RMAC model
-Wmap, Hmap = get_size_vgg_feat_map(INPUT_DIMENSION[0],INPUT_DIMENSION[1])
-regions = rmac_regions(Wmap, Hmap, 3)
-print('Loading RMAC model...')
-model = rmac((3, INPUT_DIMENSION[0], INPUT_DIMENSION[1]), len(regions))
-print(model.summary())
+model = None
+regions = None
+def load_model():
+    global regions
+    global model 
+    
+    Wmap, Hmap = get_size_vgg_feat_map(INPUT_DIMENSION[0],INPUT_DIMENSION[1])
+    regions = rmac_regions(Wmap, Hmap, 3)
+    print('Loading RMAC model...')
+    model = rmac((3, INPUT_DIMENSION[0], INPUT_DIMENSION[1]), len(regions))
+    print(model.summary())
+    print("Model loaded")
 
 def to_feature_vector(img_array):
+    if model is None:
+        load_model()
 
     img = cv2.resize(img_array, dsize=INPUT_DIMENSION, interpolation = cv2.INTER_NEAREST)
     img = img.reshape((3, INPUT_DIMENSION[0], INPUT_DIMENSION[1]))

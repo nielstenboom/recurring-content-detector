@@ -12,9 +12,6 @@ from . import featurevectors
 from . import video_functions
 from . import evaluation
 
-resized_dir_name = "resized{}".format(config.RESIZE_WIDTH)
-feature_vectors_dir_name = "feature_vectors_framejump{}".format(config.FRAMEJUMP)
-
 def max_two_values(d):
     """ 
     a) create a list of the dict's keys and values; 
@@ -80,17 +77,29 @@ def to_time_string(seconds):
     return str(datetime.timedelta(seconds=seconds))
 
 
-def detect(video_dir, annotations = None):
+def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
     """
-    The main function to call to detect recurring content. 
+    The main function to call to detect recurring content. Resizes videos, converts to feature vectors
+    and returns the locations of recurring content within the videos.
 
-    video_dir is the variable that should have the folder location of one season of video files.
-    if annotations is given then it will evaluate the detections with the annotations.
+    arguments:
+        video_dir -- is the variable that should have the folder location of one season of video files.
+        annotations -- The annotations.csv file, if annotations is given then it will evaluate the detections with the annotations.
+        feature_vector_function -- Which type of feature vectors to use, options: ["CH", "CTM", "CNN"]
 
     returns:
         dictionary with timestamp detections in seconds list for every video file name
         result[video_filename] = [(start1, end1), (start2, end2)]
     """
+
+    # make sure resize width of 224 is used with CNN
+    if feature_vector_function == "CNN":
+        config.RESIZE_WIDTH = 224
+
+    # define the static directory names
+    resized_dir_name = "resized{}".format(config.RESIZE_WIDTH)
+    feature_vectors_dir_name = "feature_vectors_framejump{}".format(config.FRAMEJUMP)
+
     # the video files used for the detection
     videos = sorted([f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))])
     # location of the vector directory
@@ -116,7 +125,7 @@ def detect(video_dir, annotations = None):
         # from the resized video, construct feature vectors
         print("Converting {} to feature vectors".format(file))
         featurevectors.construct_feature_vectors(   
-            file_resized, feature_vectors_dir_name, config.FEATURE_VECTOR_FUNCTION)
+            file_resized, feature_vectors_dir_name, feature_vector_function)
 
 
     vector_files = [os.path.join(vectors_dir,e+'.p') for e in videos]
