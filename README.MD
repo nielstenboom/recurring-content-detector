@@ -10,9 +10,10 @@ This project uses / credits to:
 
 ## Installation
 
-Clone the code somewhere you prefer. Then do the following steps (assuming you have an anaconda setup) if you want to run the program with the default settings:
+To install the package, do the following steps (assuming you have an anaconda setup with python 3.6) if you want to run the program with the default settings:
 
 ```
+git clone https://github.com/nielstenboom/recurring-content-detector.git
 cd recurring-content-detector
 wget -P recurring_content_detector/keras_rmac/data https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_th_dim_ordering_th_kernels.h5
 conda install faiss-cpu -c pytorch
@@ -21,13 +22,15 @@ pip install mkl
 pip install .
 ```
 
+It is also possible to build a docker container that does these steps for you with the [Dockerfile](Dockerfile) in the directory.
+
 Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that [tensorflow](https://www.tensorflow.org/install/pip) is installed.
 
-Do `pip uninstall recurring-content-detector` to uninstall the package.
+Run `pip uninstall recurring-content-detector` to uninstall the package.
 
 ## Recurring content detection
 
-With this code it is possible to detect recaps, opening credits, closing credits and previews up to a certain extent. The following image gives a schematic overview of how it works: 
+With this code it is possible to detect recaps, opening credits, closing credits and previews in video files from a TV-show unsupervised up to a certain extent. The following image gives a schematic overview of how it works: 
 
 <p align="center">
 <img src="images/thesisdiagram.png?raw=true">
@@ -40,7 +43,7 @@ import recurring_content_detector as rcd
 rcd.detect("/directory/with/season/videofiles")
 ```
 
-Make sure the video files you used are in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
+Make sure the video files you used can be sorted in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
 
 It will take some time as video processing takes quite some resources. An application in production should run it in parallel.
 
