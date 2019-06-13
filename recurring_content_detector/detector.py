@@ -5,6 +5,7 @@ import numpy as np
 import pickle
 import faiss
 import datetime
+from natsort import natsorted, ns
 
 # internal imports
 from . import config
@@ -101,7 +102,9 @@ def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
     feature_vectors_dir_name = "feature_vectors_framejump{}".format(config.FRAMEJUMP)
 
     # the video files used for the detection
-    videos = sorted([f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))])
+    videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
+    # make sure videos are sorted, use natural sort to correctly handle case of ep1 and ep10 in file names
+    videos = natsorted(videos, alg=ns.IGNORECASE)
     # location of the vector directory
     vectors_dir = os.path.join(video_dir, resized_dir_name, feature_vectors_dir_name)
 
