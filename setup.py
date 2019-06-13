@@ -17,6 +17,7 @@ setup(name='recurring content detector',
           'opencv_python',
           'pandas',
           'scipy',
-          'tqdm'
+          'tqdm',
+          'natsort'
       ],
       zip_safe=False)

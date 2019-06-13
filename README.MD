@@ -42,10 +42,16 @@ If the installation was succesful then you can run the detector in a python prog
 import recurring_content_detector as rcd
 rcd.detect("/directory/with/season/videofiles")
 ```
+This will run the detection by building the CNN feature vectors. The feature vector function can also be changed:
+```
+# options for the function are ["CNN", "CH", "CTM"]
+rcd.detect("/directory/with/season/videofiles", feature_vector_function="CH")
+```
+This will construct color histograms, which can be built much faster than the CNN vectors but are slightly less accurate.
 
 Make sure the video files you used can be sorted in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
 
-It will take some time as video processing takes quite some resources. An application in production should run it in parallel.
+It will take some time as video processing takes quite some resources. An example application in production should run detections in parallel.
 
 
 ## Annotations
@@ -54,4 +60,23 @@ If you want to quantitively test out how well this works on your own data, fill 
 ```
 rcd.detect("/directory/with/season/videofiles", annotations = "path/to/annotations.csv")
 ```
- When the program is done, it will output precision and recall scores based on the supplied annotations.
+
+When the program is done, it will give an example with the same outline as the example below:
+
+ ```
+Detections for: episode1.mp4
+0:01:21.600000           -               0:02:20.880000
+0:02:49.320000           -               0:03:15.480000
+
+Detections for: episode2.mp4
+0:00:00                  -               0:01:16.920000
+0:01:38.040000           -               0:02:37.440000
+
+Detections for: episode3.mp4
+0:00:00                  -               0:01:27.840000
+0:01:51.120000           -               0:02:50.760000
+0:42:26.400000           -               0:42:54
+
+Total precision = 0.862
+Total recall = 0.853
+ ```
