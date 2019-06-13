@@ -1,4 +1,4 @@
-# Recurring content detector / credits detector
+# Recurring content detector (credits, recaps and previews detection)
 
 This repository contains the code that was used to conduct experiments for a master's thesis LINK TODO. The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner.
 
@@ -58,7 +58,7 @@ It will take some time as video processing takes quite some resources. An exampl
 
 If you want to quantitively test out how well this works on your own data, fill in the [annotations](annotations_example.csv) file and supply it as the second parameter.
 ```
-rcd.detect("/directory/with/season/videofiles", annotations = "path/to/annotations.csv")
+rcd.detect("directory/with/season/videofiles", annotations = "path/to/annotations.csv")
 ```
 
 When the program is done, it will give an example with the same outline as the example below:
