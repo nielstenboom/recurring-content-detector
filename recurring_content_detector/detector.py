@@ -133,17 +133,23 @@ def query_episodes_with_faiss(videos, vectors_dir):
     return results
 
 
-def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
+def detect(video_dir, feature_vector_function, annotations = None):
     """
     The main function to call to detect recurring content. Resizes videos, converts to feature vectors
     and returns the locations of recurring content within the videos.
 
-    arguments:
-        video_dir -- is the variable that should have the folder location of one season of video files.
-        annotations -- The annotations.csv file, if annotations is given then it will evaluate the detections with the annotations.
-        feature_vector_function -- Which type of feature vectors to use, options: ["CH", "CTM", "CNN"]
+    arguments
+    ---------
+    video_dir : str
+        Variable that should have the folder location of one season of video files.
+    annotations : str
+        Location of the annotations.csv file, if annotations is given then it will evaluate the detections with the annotations.
+    feature_vector_function : str
+        Which type of feature vectors to use, options: ["CH", "CTM", "CNN"]
 
-    returns:
+    returns
+    -------
+    dictionary
         dictionary with timestamp detections in seconds list for every video file name
         result[video_filename] = [(start1, end1), (start2, end2)]
     """
@@ -154,7 +160,7 @@ def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
 
     # define the static directory names
     resized_dir_name = "resized{}".format(config.RESIZE_WIDTH)
-    feature_vectors_dir_name = "feature_vectors_framejump{}".format(config.FRAMEJUMP)
+    feature_vectors_dir_name = "{}_feature_vectors_framejump{}".format(feature_vector_function,config.FRAMEJUMP)
 
     # the video files used for the detection
     videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
