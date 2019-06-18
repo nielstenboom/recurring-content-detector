@@ -77,6 +77,61 @@ def to_time_string(seconds):
     """
     return str(datetime.timedelta(seconds=seconds))
 
+def query_episodes_with_faiss(videos, vectors_dir):
+    """
+    Given a vector with the video file names and the directory 
+    where the corresponding vectors files reside. This function will
+    query each set of episode feature vectors on all of the other feature vectors.
+    It will return the distances to the best match found on each frame.
+
+    returns:
+        A list with tuples consisting of:
+        (video_file_name, [list with all distances best match on each frame])
+    """
+
+    vector_files = [os.path.join(vectors_dir,e+'.p') for e in videos]
+    vectors = []
+
+    # the lengths of each vector, will be used to query each episode
+    lengths = []
+
+    # concatenate all the vectors into a single list multidimensional array
+    for f in vector_files:
+        episode_vectors = np.array(pickle.load(open(f, "rb")), np.float32)
+        lengths.append(episode_vectors.shape[0])
+        vectors.append(episode_vectors)
+
+    vectors = np.vstack(vectors)
+
+    results = []
+    for i, length in enumerate(lengths):
+        print("Querying {}".format(videos[i]))
+        i += 1
+        s = sum(lengths[:i-1])
+        e = sum(lengths[:i])
+
+        # query consists of one episode
+        query = vectors[s:e]
+        # rest of the feature vectors
+        rest = np.append(vectors[:s], vectors[e:], axis=0)
+
+        # build the faiss index, set vector size
+        vector_size = query.shape[1]
+        index = faiss.IndexFlatL2(vector_size) 
+        
+        # add vectors of the rest of the episodes to the index
+        index.add(rest)
+
+        # we want to see k nearest neighbors
+        k = 1
+        # search with for matches with query
+        scores, indexes = index.search(query, k)
+        
+        result = scores[:,0]    
+        results.append((videos[i-1], result))
+
+    return results
+
 
 def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
     """
@@ -130,46 +185,8 @@ def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
         featurevectors.construct_feature_vectors(   
             file_resized, feature_vectors_dir_name, feature_vector_function)
 
-
-    vector_files = [os.path.join(vectors_dir,e+'.p') for e in videos]
-    vectors = []
-
-    # the lengths of each vector, will be used to query each episode
-    lengths = []
-
-    # concatenate all the vectors into a single list multidimensional array
-    for f in vector_files:
-        h = np.array(pickle.load(open(f, "rb")), np.float32)
-        lengths.append(h.shape[0])
-        vectors.append(h)
-
-    vectors = np.vstack(vectors)
-
-    results = []
-    for i, length in enumerate(lengths):
-        print("Querying {}".format(videos[i]))
-        i += 1
-        s = sum(lengths[:i-1])
-        e = sum(lengths[:i])
-
-        # query consists of one episode
-        query = vectors[s:e]
-        # rest of the feature vectors
-        rest = np.append(vectors[:s], vectors[e:], axis=0)
-
-        # build the faiss index, set vector size
-        vector_size = query.shape[1]
-        index = faiss.IndexFlatL2(vector_size)    
-        # add vectors of the rest of the episodes to the index
-        index.add(rest)
-
-        # we want to see k nearest neighbors
-        k = 1
-        # search with for matches with query
-        scores, indexes = index.search(query, k)
-        
-        result = scores[:,0]    
-        results.append((videos[i-1], result))
+    # query the feature vectors of each episode on the other episodes
+    results = query_episodes_with_faiss(videos, vectors_dir)
     
     # evaluation variables
     total_relevant_seconds = 0

@@ -13,7 +13,7 @@ def overlap(interval1, interval2):
 
 def sum_timestamps(timestamps):
     """
-    Get the toal number of seconds out of a list with timestamps formatted like: (start,end)
+    Get the total number of seconds out of a list with timestamps formatted like: (start,end)
     """
     result = 0
     for start,end in timestamps:
@@ -23,7 +23,10 @@ def sum_timestamps(timestamps):
 
 # matches two lists of (starttime,endtime) detections and outputs the relevancy variables
 def match_detections_precision_recall(detected, ground_truth, verbose=False):
-    
+    """
+    Compares the detections and ground truth lists of timestamps and calculates
+    and outputs precision and recall scores based on the comparison.
+    """
     if verbose:
         print("Comparing detections")
         print("detected: \t \t {}".format(detected))
@@ -104,6 +107,10 @@ def to_seconds(time):
             return -1
 
 def get_skippable_timestamps_by_filename(filename, df):
+    """
+    Looks in the supplied pandas dataframe to extract the annotations for the 
+    given filename.
+    """
     result = []
     try:
         row = df.loc[df['filename'] == filename].to_dict(orient='records')[0]
@@ -123,7 +130,12 @@ def get_skippable_timestamps_by_filename(filename, df):
     return merge_consecutive_timestamps(result)
 
 def get_annotations(filename):
+    """
+    Gets the annotations file as a pandas dataframe.
+    """
     annotations = pd.read_csv(filename).dropna(how='all')
+
+    # convert the timestamp strings to regular seconds
     annotations['recap_start'] = annotations['recap_start'].apply(to_seconds)
     annotations['recap_end'] = annotations['recap_end'].apply(to_seconds)
     annotations['openingcredits_end'] = annotations['openingcredits_end'].apply(to_seconds)
@@ -132,5 +144,6 @@ def get_annotations(filename):
     annotations['preview_end'] = annotations['preview_end'].apply(to_seconds)
     annotations['closingcredits_end'] = annotations['closingcredits_end'].apply(to_seconds)
     annotations['closingcredits_start'] = annotations['closingcredits_start'].apply(to_seconds)
+
     return annotations
 

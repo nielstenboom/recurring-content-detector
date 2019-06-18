@@ -15,14 +15,15 @@ To install the package, do the following steps (assuming you have an anaconda se
 ```
 git clone https://github.com/nielstenboom/recurring-content-detector.git
 cd recurring-content-detector
+# download the vgg16 neural networks weights
 wget -P recurring_content_detector/keras_rmac/data https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_th_dim_ordering_th_kernels.h5
 conda install faiss-cpu -c pytorch
 pip install mkl
-(optional: change parameters in recurring_content_detector/config.py)
+# optional step: change parameters in recurring_content_detector/config.py)
 pip install .
 ```
 
-It is also possible to build a docker container that does these steps for you with the [Dockerfile](Dockerfile) in the directory.
+It is also possible to build a docker container that does all the steps for you with the [Dockerfile](Dockerfile) in the directory.
 
 Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that [tensorflow](https://www.tensorflow.org/install/pip) is installed.
 

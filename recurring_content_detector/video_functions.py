@@ -1,8 +1,5 @@
 import cv2
-import os
-import subprocess
 import ffmpeg
-import os.path
 
 from . import config
 

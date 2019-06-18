@@ -86,6 +86,11 @@ def color_hist(img):
     return result
 
 def construct_feature_vectors(video_fn, result_dir_name, vector_function):
+    """
+    Function that converts a video file to a list of feature vectors,
+    which it then writes to a pickle file.
+    """
+    
     base_video_fn = os.path.basename(video_fn)
     video = cv2.VideoCapture(video_fn)
     series_dir = os.path.dirname(video_fn)
