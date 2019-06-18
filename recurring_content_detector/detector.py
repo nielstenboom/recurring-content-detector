@@ -154,10 +154,6 @@ def detect(video_dir, feature_vector_function, annotations = None):
         result[video_filename] = [(start1, end1), (start2, end2)]
     """
 
-    # make sure resize width of 224 is used with CNN
-    if feature_vector_function == "CNN":
-        config.RESIZE_WIDTH = 224
-
     # define the static directory names
     resized_dir_name = "resized{}".format(config.RESIZE_WIDTH)
     feature_vectors_dir_name = "{}_feature_vectors_framejump{}".format(feature_vector_function,config.FRAMEJUMP)
