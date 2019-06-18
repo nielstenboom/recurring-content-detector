@@ -25,7 +25,7 @@ pip install .
 
 It is also possible to build a docker container that does all the steps for you with the [Dockerfile](Dockerfile) in the directory.
 
-Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that [tensorflow](https://www.tensorflow.org/install/pip) is installed.
+Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that [tensorflow](https://www.tensorflow.org/install/pip) (GPU version preferably) is installed.
 
 Run `pip uninstall recurring-content-detector` to uninstall the package.
 
