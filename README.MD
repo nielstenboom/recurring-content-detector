@@ -21,7 +21,7 @@ wget -P recurring_content_detector/keras_rmac/data https://github.com/fchollet/d
 
 conda install faiss-cpu -c pytorch
 pip install mkl
-# optional step: change parameters in recurring_content_detector/config.py)
+# optional step: change parameters in recurring_content_detector/config.py
 pip install .
 ```
 

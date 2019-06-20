@@ -15,9 +15,9 @@ RUN wget -P recurring_content_detector/keras_rmac/data https://github.com/fcholl
 RUN pip install .
 
 RUN apt-get update
-RUN apt-get install libglib2.0-0
-RUN apt-get install -y libsm6 libxext6 libxrender-dev
+RUN apt-get install libglib2.0-0 -y
+RUN apt-get install -y libsm6 libxext6 libxrender-dev -y
 RUN pip install opencv-python
 
-RUN apt-get install ffmpeg
+RUN apt-get install ffmpeg -y
 RUN pip install tensorflow
