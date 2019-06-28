@@ -41,12 +41,12 @@ With this code it is possible to detect recaps, opening credits, closing credits
 
 If the installation was succesful then you can run the detector in a python program in the following way:
 
-```
+```python
 import recurring_content_detector as rcd
 rcd.detect("/directory/with/season/videofiles")
 ```
 This will run the detection by building the CNN feature vectors. The feature vector function can also be changed:
-```
+```python
 # options for the function are ["CNN", "CH", "CTM"]
 rcd.detect("/directory/with/season/videofiles", feature_vector_function="CH")
 ```
@@ -60,7 +60,7 @@ It will take some time as video processing takes quite some resources. An exampl
 ## Annotations
 
 If you want to quantitively test out how well this works on your own data, fill in the [annotations](annotations_example.csv) file and supply it as the second parameter.
-```
+```python
 rcd.detect("directory/with/season/videofiles", annotations = "path/to/annotations.csv")
 ```
 

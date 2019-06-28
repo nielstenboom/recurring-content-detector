@@ -151,7 +151,11 @@ def detect(video_dir, feature_vector_function, annotations = None):
     -------
     dictionary
         dictionary with timestamp detections in seconds list for every video file name
-        result[video_filename] = [(start1, end1), (start2, end2)]
+        
+       {"video_filename" : [(start1, end1), (start2, end2)], 
+        "video_filename2" :  [(start1, end1), (start2, end2)],
+        ...
+       }
     """
 
     # define the static directory names
