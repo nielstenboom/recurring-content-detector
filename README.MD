@@ -1,6 +1,6 @@
 # Recurring content detector (credits, recaps and previews detection)
 
-This repository contains the code that was used to conduct experiments for a master's thesis LINK TODO. The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner.
+This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner.
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 
