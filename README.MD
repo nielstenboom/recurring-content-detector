@@ -1,6 +1,6 @@
 # Recurring content detector (credits, recaps and previews detection)
 
-This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a streaming service.
+This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a VOD streaming service.
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 
@@ -12,7 +12,7 @@ This project uses / credits to:
 
 To install the package, do the following steps (assuming you have an anaconda setup with python 3.6) if you want to run the program with the default settings:
 
-```
+```bash
 git clone https://github.com/nielstenboom/recurring-content-detector.git
 cd recurring-content-detector
 
