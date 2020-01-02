@@ -4,7 +4,6 @@ import os
 realpath = os.path.dirname(os.path.realpath(__file__))
 
 DATA_DIR = realpath +'/data/'
-WEIGHTS_FILE = 'vgg16_weights_th_dim_ordering_th_kernels.h5'
 PCA_FILE = 'PCAmatrices.mat'
 IMG_SIZE = 1024
 
