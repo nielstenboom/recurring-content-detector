@@ -19,6 +19,7 @@ setup(name='recurring content detector',
           'scipy==1.3.1',
           'tqdm==4.40.2',
           'natsort==6.2.0',
-          'tensorflow==1.14'
+          'tensorflow==1.14',
+          'numpy==1.16.2'
       ],
       zip_safe=False)
