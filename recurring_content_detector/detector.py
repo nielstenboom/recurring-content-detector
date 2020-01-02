@@ -145,7 +145,8 @@ def detect(video_dir, feature_vector_function, annotations = None):
     annotations : str
         Location of the annotations.csv file, if annotations is given then it will evaluate the detections with the annotations.
     feature_vector_function : str
-        Which type of feature vectors to use, options: ["CH", "CTM", "CNN"]
+        Which type of feature vectors to use, options: ["CH", "CTM", "CNN"], default is color histograms (CH) because
+        of balance between speed and accuracy. This default is defined in init.py.
 
     returns
     -------
@@ -157,6 +158,10 @@ def detect(video_dir, feature_vector_function, annotations = None):
         ...
        }
     """
+    print("Starting detection")
+    print(f"Framejump: {config.FRAMEJUMP}")
+    print(f"Video width: {config.RESIZE_WIDTH}")
+    print(f"Feature vector type: {feature_vector_function}")
 
     # define the static directory names
     resized_dir_name = "resized{}".format(config.RESIZE_WIDTH)

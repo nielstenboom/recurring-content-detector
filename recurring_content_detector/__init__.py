@@ -1,7 +1,7 @@
 from . import detector
 from . import config
 
-def detect(video_dir, annotations = None, feature_vector_function = "CNN"):
+def detect(video_dir, annotations = None, feature_vector_function = "CH"):
     
     old_width = config.RESIZE_WIDTH
     
