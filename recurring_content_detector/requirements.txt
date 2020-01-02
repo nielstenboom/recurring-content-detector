@@ -6,7 +6,7 @@
 Keras == 2.2.4
 
 # keras_rmac\rmac.py: 9
-Pillow == 5.4.1
+Pillow == 6.2.0
 
 # video_functions.py: 4
 ffmpeg_python == 0.1.16
