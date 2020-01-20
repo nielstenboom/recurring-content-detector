@@ -133,7 +133,7 @@ def query_episodes_with_faiss(videos, vectors_dir):
     return results
 
 
-def detect(video_dir, feature_vector_function, annotations = None):
+def detect(video_dir, feature_vector_function, annotations = None, artifacts_dir = None):
     """
     The main function to call to detect recurring content. Resizes videos, converts to feature vectors
     and returns the locations of recurring content within the videos.
@@ -147,6 +147,9 @@ def detect(video_dir, feature_vector_function, annotations = None):
     feature_vector_function : str
         Which type of feature vectors to use, options: ["CH", "CTM", "CNN"], default is color histograms (CH) because
         of balance between speed and accuracy. This default is defined in init.py.
+    artifacts_dir : str
+        Directory location where the artifacts should be saved. Default location is the location
+        defined with the video_dir parameter.
 
     returns
     -------
@@ -171,8 +174,13 @@ def detect(video_dir, feature_vector_function, annotations = None):
     videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
     # make sure videos are sorted, use natural sort to correctly handle case of ep1 and ep10 in file names
     videos = natsorted(videos, alg=ns.IGNORECASE)
+
+    # if artifacts dir is not set, then store artifacts in dir with videos
+    if artifacts_dir is None:
+        artifacts_dir = video_dir
+
     # location of the vector directory
-    vectors_dir = os.path.join(video_dir, resized_dir_name, feature_vectors_dir_name)
+    vectors_dir = os.path.join(artifacts_dir, resized_dir_name, feature_vectors_dir_name)
 
     # if there's an annotations file, get the pandas format
     if annotations is not None:
@@ -181,7 +189,7 @@ def detect(video_dir, feature_vector_function, annotations = None):
     for file in videos:
         # set the video path files
         file_full = os.path.join(video_dir, file)
-        file_resized = os.path.join(video_dir, resized_dir_name, file)
+        file_resized = os.path.join(artifacts_dir, resized_dir_name, file)
 
         # make sure folder of experimentname exists or create otherwise
         os.makedirs(os.path.dirname(file_resized), exist_ok=True)
