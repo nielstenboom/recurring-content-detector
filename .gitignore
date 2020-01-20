@@ -3,6 +3,8 @@
 test/
 annotations.csv
 *.h5
+*.mp4
+*.p
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

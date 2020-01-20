@@ -44,9 +44,14 @@ rcd.detect("/directory/with/season/videofiles")
 This will run the detection by building the CNN feature vectors. The feature vector function can also be changed:
 ```python
 # options for the function are ["CNN", "CH", "CTM"]
-rcd.detect("/directory/with/season/videofiles", feature_vector_function="CH")
+rcd.detect("/directory/with/season/videofiles", feature_vector_function="CNN")
 ```
-This will construct color histograms, which can be built much faster than the CNN vectors but are slightly less accurate.
+This will CNN vectors, which are a bit more accurate but take much longer to build.
+
+Because the videos need to be resized and the feature vectors saved in files, some artifacts will be created. On default they will be saved in the same directory as the video files, if you want them saved in a different directory:
+```python
+rcd.detect("/directory/with/season/videofiles", feature_vector_function="CH", artifacts_dir="/tmp")
+```
 
 Make sure the video files you used can be sorted in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
 
