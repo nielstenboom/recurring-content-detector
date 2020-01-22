@@ -41,7 +41,7 @@ If the installation was succesful then you can run the detector in a python prog
 import recurring_content_detector as rcd
 rcd.detect("/directory/with/season/videofiles")
 ```
-This will run the detection by building the CNN feature vectors. The feature vector function can also be changed:
+This will run the detection by building the color histogram feature vectors. The feature vector function can also be changed:
 ```python
 # options for the function are ["CNN", "CH", "CTM"]
 rcd.detect("/directory/with/season/videofiles", feature_vector_function="CNN")
