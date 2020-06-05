@@ -4,10 +4,6 @@ This repository contains the code that was used to conduct experiments for a [ma
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 
-This project uses / credits to:
-- https://github.com/noagarcia/keras_rmac for the CNN vectors 
-- https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
-
 ## Installation
 
 To install the package, do the following steps (assuming you have an anaconda setup with python 3.6) if you want to run the program with the default settings:
@@ -85,3 +81,6 @@ Total precision = 0.862
 Total recall = 0.853
  ```
  
+## Credits
+- https://github.com/noagarcia/keras_rmac for the CNN vectors 
+- https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
