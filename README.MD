@@ -4,7 +4,24 @@ This repository contains the code that was used to conduct experiments for a [ma
 
 The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
 
-## Installation
+## Quickstart with Docker
+
+To try this out with Docker on your own data, copy the video files of one season to a folder in the current directory named `videos`, then create a script `detect.py` with the contents:
+
+```python
+import recurring_content_detector as rcd
+
+results = rcd.detect("videos")
+
+print(results)
+```
+Now you can run the detector by running the docker command:
+```
+docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python detect.py
+```
+It'll first downsize the videos using ffmpeg, then it will convert the videos to feature vectors and then the algorithm for detecting the recurring content is applied, the `results` variable contains the intervals of all the recurring parts.
+
+## Local Installation
 
 To install the package, do the following steps (assuming you have an anaconda setup with python 3.6) if you want to run the program with the default settings:
 
@@ -31,7 +48,7 @@ With this code it is possible to detect recaps, opening credits, closing credits
 <img src="images/thesisdiagram.png?raw=true">
 </p>
 
-If the installation was succesful then you can run the detector in a python program in the following way:
+You can run the detector in a python program in the following way:
 
 ```python
 import recurring_content_detector as rcd
