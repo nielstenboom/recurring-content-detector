@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e263d84692974d38a0678f3090a09187)](https://www.codacy.com/manual/nielstenboom/recurring-content-detector?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nielstenboom/recurring-content-detector&amp;utm_campaign=Badge_Grade)
+
 # Recurring content detector (credits, recaps and previews detection)
 
 This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a VOD streaming service.
