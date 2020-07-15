@@ -1,22 +1,18 @@
-FROM conda/miniconda3
-
-RUN conda install faiss-cpu -c pytorch
-RUN pip install mkl
-
+FROM continuumio/miniconda3:4.7.12
 
 WORKDIR /opt
 
-COPY . /opt/recurring-content-detector
+COPY ./recurring_content_detector /opt/recurring-content-detector/recurring_content_detector
+COPY setup.py /opt/recurring-content-detector/setup.py 
 
 WORKDIR /opt/recurring-content-detector
 
-RUN pip install .
+RUN conda install python=3.6 -y && \
+    pip install . && \
+    apt-get update && \
+    apt-get install libglib2.0-0 -y && \
+    apt-get install -y libsm6 libxext6 libxrender-dev -y && \
+    apt-get install ffmpeg -y && \
+    conda install faiss-cpu -c pytorch
 
-RUN apt-get update
-RUN apt-get install libglib2.0-0 -y
-RUN apt-get install -y libsm6 libxext6 libxrender-dev -y
-RUN pip install opencv-python
-
-RUN apt-get install ffmpeg -y
-RUN pip install tensorflow
-RUN conda update numpy -y
+    
