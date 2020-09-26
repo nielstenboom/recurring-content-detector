@@ -13,6 +13,6 @@ RUN conda install python=3.6 -y && \
     apt-get install libglib2.0-0 -y && \
     apt-get install -y libsm6 libxext6 libxrender-dev -y && \
     apt-get install ffmpeg -y && \
-    conda install faiss-cpu -c pytorch
+    conda install faiss-cpu=1.6.3 -c pytorch
 
     
