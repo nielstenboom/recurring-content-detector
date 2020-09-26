@@ -1,19 +1,5 @@
 from . import detector
-from . import config
 
-def detect(video_dir, annotations = None, feature_vector_function = "CH", artifacts_dir = None):
-    
-    old_width = config.RESIZE_WIDTH
-    
-    # make sure resize width of 224 is used with CNN
-    if feature_vector_function == "CNN":
-        config.RESIZE_WIDTH = 224
-
-    result = detector.detect(video_dir, feature_vector_function, annotations, artifacts_dir)
-
-    # set config variable back to the old value,
-    # so when reusing the module, there is no unexpected behavior.
-    config.RESIZE_WIDTH = old_width
-
-    return result
+def detect(*args, **kwargs):
+    return detector.detect(*args, **kwargs)
 

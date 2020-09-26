@@ -56,22 +56,67 @@ You can run the detector in a python program in the following way:
 import recurring_content_detector as rcd
 rcd.detect("/directory/with/season/videofiles")
 ```
-This will run the detection by building the color histogram feature vectors. The feature vector function can also be changed:
+This will run the detection by building the color histogram feature vectors. Make sure the video files you used can be sorted in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
+
+
+The feature vector function can also be changed:
 ```python
 # options for the function are ["CNN", "CH", "CTM"]
 rcd.detect("/directory/with/season/videofiles", feature_vector_function="CNN")
 ```
 This will CNN vectors, which are a bit more accurate but take much longer to build.
 
-Because the videos need to be resized and the feature vectors saved in files, some artifacts will be created. On default they will be saved in the same directory as the video files, if you want them saved in a different directory:
+The `detect` function has many more parameters that can be tweaked, the defaults it has, are the parameters I got the best results with on my experiments.
+
 ```python
-rcd.detect("/directory/with/season/videofiles", feature_vector_function="CH", artifacts_dir="/tmp")
+def detect(video_dir, feature_vector_function="CH", annotations=None, artifacts_dir=None, framejump=3, percentile=10, resize_width=320, video_start_threshold_percentile=20, video_end_threshold_seconds=15, min_detection_size_seconds=15):
+"""
+The main function to call to detect recurring content. Resizes videos, converts to feature vectors
+and returns the locations of recurring content within the videos.
+
+arguments
+---------
+video_dir : str
+    Variable that should have the folder location of one season of video files.
+
+annotations : str
+    Location of the annotations.csv file, if annotations is given then it will evaluate the detections with the annotations.
+    
+feature_vector_function : str
+    Which type of feature vectors to use, options: ["CH", "CTM", "CNN"], default is color histograms (CH) because of balance between speed and accuracy. This default is defined in init.py.
+
+artifacts_dir : str
+    Directory location where the artifacts should be saved. Default location is the location defined with the video_dir parameter.
+
+framejump : int
+    The frame interval to use when sampling frames for the detection, a higher number means that less frames will be taken into consideration and will improve the processing time. But will probably cost accuracy.
+
+percentile : int
+    Which percentile of the best matches will be taken into consideration as recurring content. A high percentile will means a higher recall, lower precision. A low percentile means a lower recall and higher precision.
+
+resize_width: int
+    Width to which the videos will be resized. A lower number means higher processing speed but less accuracy and vice versa.
+
+video_start_threshold_percentile: int
+    Percentage of the start of the video in which the detections will be marked as detections. As recaps and opening credits only occur at the first parts of video files, this parameter can alter that threshold. So putting 20 in here means that if we find recurring content in the first 20% of frames of the video, it will be marked as a detection. If it's detected later than 20%, then the detection will be ignored.
+
+video_end_threshold_seconds: int
+    Number of seconds threshold in which the final detection at the end of the video should end for it to count. Putting 15 here means that a detection at the end of a video will only be marked as a detection if the detection ends in the last 15 seconds of the video.
+
+min_detection_size_seconds: int
+    Minimal amount of seconds a detection should be before counting it as a detection. As credits & recaps & previews generally never consist of a few seconds, it's wise to pick at least a number higher than 10.
+
+returns
+-------
+dictionary
+    dictionary with timestamp detections in seconds list for every video file name
+    
+    {"episode1.mp4" : [(start1, end1), (start2, end2)], 
+    "episode2.mp4" :  [(start1, end1), (start2, end2)],
+    ...
+    }
+    """
 ```
-
-Make sure the video files you used can be sorted in the right alphabetical order similar as to when they play in the season! So episode_1 -> episode_2 -> episode_3 -> etc.. You'll get weird results otherwise.
-
-It will take some time as video processing takes quite some resources. An example application in production should run detections in parallel.
-
 
 ## Annotations
 
@@ -99,7 +144,17 @@ Detections for: episode3.mp4
 Total precision = 0.862
 Total recall = 0.853
  ```
+
+## Tests
+
+There's a few tests in the test directory. They can also be run in the docker container, make sure you creted a `videos` directory with some episodes in it:
+```
+docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python -m pytest -s
+```
  
 ## Credits
 - https://github.com/noagarcia/keras_rmac for the CNN vectors 
 - https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
+
+## Final words
+If you use and like my project or want to discuss something related, I would ❤️ to hear about it! You can send me an email at nielstenboom@gmail.com.
