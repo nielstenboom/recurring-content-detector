@@ -5,7 +5,6 @@ import pickle
 import numpy as np
 from math import sqrt
 
-from . import config
 from . import keras_rmac
 
 
@@ -85,7 +84,7 @@ def color_hist(img):
     result = get_img_color_hist(img, 100)
     return result
 
-def construct_feature_vectors(video_fn, result_dir_name, vector_function):
+def construct_feature_vectors(video_fn, result_dir_name, vector_function, framejump):
     """
     Function that converts a video file to a list of feature vectors,
     which it then writes to a pickle file.
@@ -112,11 +111,11 @@ def construct_feature_vectors(video_fn, result_dir_name, vector_function):
 
         # construct the histograms from frames at the start of scenes
         feature_vectors = []
-        total = int(video.get(cv2.CAP_PROP_FRAME_COUNT) / config.FRAMEJUMP) - 1
+        total = int(video.get(cv2.CAP_PROP_FRAME_COUNT) / framejump) - 1
 
         # apply the vector function for every xth frame determined by framejump
         for i in tqdm(range(total)):
-            img = get_frame(i * config.FRAMEJUMP, video)
+            img = get_frame(i * framejump, video)
             feature_vector = vector_function(img)
             feature_vectors.append(feature_vector)
             
