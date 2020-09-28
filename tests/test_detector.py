@@ -28,6 +28,14 @@ def test_fill_gaps_smalllookahaead():
 
     assert expected == output.tolist()
 
+def test_fill_gaps_multiple():
+    input = np.array([0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1])
+    expected = [0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1]
+
+    output = fill_gaps(input, lookahead=6)
+
+    assert expected == output.tolist()
+
 
 def test_get_two_longest_timestamps_regular():
     input = [(0,10), (0,5), (20,21)]
