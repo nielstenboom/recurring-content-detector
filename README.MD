@@ -4,7 +4,7 @@
 
 This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a VOD streaming service.
 
-The experiments done in the master's thesis were done in the jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be used more easily.
+The experiments done in the master's thesis were done in jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be re-used more easily.
 
 ## Quickstart with Docker
 
@@ -69,7 +69,9 @@ This will CNN vectors, which are a bit more accurate but take much longer to bui
 The `detect` function has many more parameters that can be tweaked, the defaults it has, are the parameters I got the best results with on my experiments.
 
 ```python
-def detect(video_dir, feature_vector_function="CH", annotations=None, artifacts_dir=None, framejump=3, percentile=10, resize_width=320, video_start_threshold_percentile=20, video_end_threshold_seconds=15, min_detection_size_seconds=15):
+def detect(video_dir, feature_vector_function="CH", annotations=None, artifacts_dir=None, 
+            framejump=3, percentile=10, resize_width=320, video_start_threshold_percentile=20, 
+            video_end_threshold_seconds=15, min_detection_size_seconds=15):
 """
 The main function to call to detect recurring content. Resizes videos, converts to feature vectors
 and returns the locations of recurring content within the videos.
@@ -80,31 +82,47 @@ video_dir : str
     Variable that should have the folder location of one season of video files.
 
 annotations : str
-    Location of the annotations.csv file, if annotations is given then it will evaluate the detections with the annotations.
+    Location of the annotations.csv file, if annotations is given then it will evaluate 
+    the detections with the annotations.
     
 feature_vector_function : str
-    Which type of feature vectors to use, options: ["CH", "CTM", "CNN"], default is color histograms (CH) because of balance between speed and accuracy. This default is defined in init.py.
+    Which type of feature vectors to use, options: ["CH", "CTM", "CNN"], default is color histograms (CH) 
+    because of balance between speed and accuracy. This default is defined in init.py.
 
 artifacts_dir : str
-    Directory location where the artifacts should be saved. Default location is the location defined with the video_dir parameter.
+    Directory location where the artifacts should be saved. Default location is the location defined 
+    with the video_dir parameter.
 
 framejump : int
-    The frame interval to use when sampling frames for the detection, a higher number means that less frames will be taken into consideration and will improve the processing time. But will probably cost accuracy.
+    The frame interval to use when sampling frames for the detection, a higher number means that 
+    less frames will be taken into consideration and will improve the processing time. 
+    But will probably cost accuracy.
 
 percentile : int
-    Which percentile of the best matches will be taken into consideration as recurring content. A high percentile will means a higher recall, lower precision. A low percentile means a lower recall and higher precision.
+    Which percentile of the best matches will be taken into consideration as recurring content. 
+    A high percentile will means a higher recall, lower precision. 
+    A low percentile means a lower recall and higher precision.
 
 resize_width: int
-    Width to which the videos will be resized. A lower number means higher processing speed but less accuracy and vice versa.
+    Width to which the videos will be resized. A lower number means higher processing speed but 
+    less accuracy and vice versa.
 
 video_start_threshold_percentile: int
-    Percentage of the start of the video in which the detections will be marked as detections. As recaps and opening credits only occur at the first parts of video files, this parameter can alter that threshold. So putting 20 in here means that if we find recurring content in the first 20% of frames of the video, it will be marked as a detection. If it's detected later than 20%, then the detection will be ignored.
+    Percentage of the start of the video in which the detections will be marked as detections. 
+    As recaps and opening credits only occur at the first parts of video files, this parameter can alter 
+    that threshold. So putting 20 in here means that if we find recurring content in the first 20% of 
+    frames of the video, it will be marked as a detection. If it's detected later than 20%, then the 
+    detection will be ignored.
 
 video_end_threshold_seconds: int
-    Number of seconds threshold in which the final detection at the end of the video should end for it to count. Putting 15 here means that a detection at the end of a video will only be marked as a detection if the detection ends in the last 15 seconds of the video.
+    Number of seconds threshold in which the final detection at the end of the video should end for it 
+    to count. Putting 15 here means that a detection at the end of a video will only be marked as a 
+    detection if the detection ends in the last 15 seconds of the video.
 
 min_detection_size_seconds: int
-    Minimal amount of seconds a detection should be before counting it as a detection. As credits & recaps & previews generally never consist of a few seconds, it's wise to pick at least a number higher than 10.
+    Minimal amount of seconds a detection should be before counting it as a detection. As credits & 
+    recaps & previews generally never consist of a few seconds, it's wise to pick at least a number 
+    higher than 10.
 
 returns
 -------
@@ -112,8 +130,9 @@ dictionary
     dictionary with timestamp detections in seconds list for every video file name
     
     {"episode1.mp4" : [(start1, end1), (start2, end2)], 
-    "episode2.mp4" :  [(start1, end1), (start2, end2)],
-    ...
+     "episode2.mp4" :  [(start1, end1), (start2, end2)],
+     ...
+     "episode10.mp4" : [(start1, end1), (start2, end2)]
     }
     """
 ```
@@ -147,7 +166,7 @@ Total recall = 0.853
 
 ## Tests
 
-There's a few tests in the test directory. They can also be run in the docker container, make sure you creted a `videos` directory with some episodes in it:
+There's a few tests in the test directory. They can also be run in the docker container, make sure you created a `videos` directory with some episodes in it:
 ```
 docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python -m pytest -s
 ```
@@ -157,4 +176,4 @@ docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-
 - https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
 
 ## Final words
-If you use and like my project or want to discuss something related, I would ❤️ to hear about it! You can send me an email at nielstenboom@gmail.com.
+If you use and like my project or want to discuss something related, I would  ❤️  to hear about it! You can send me an email at nielstenboom@gmail.com.
