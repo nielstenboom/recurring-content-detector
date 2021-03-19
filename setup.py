@@ -11,7 +11,7 @@ setup(name='recurring content detector',
       include_package_data = True,
       install_requires=[
           'Keras==2.2.4',
-          'Pillow==6.1.0',
+          'Pillow==8.1.1',
           'ffmpeg_python==0.2.0',
           'matplotlib==3.1.1',
           'opencv_python==4.1.1.26',
