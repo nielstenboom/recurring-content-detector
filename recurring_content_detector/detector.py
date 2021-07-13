@@ -1,5 +1,5 @@
 from os.path import join, isfile, dirname
-from os import makedirs
+from os import makedirs, listdir
 from itertools import groupby
 from operator import itemgetter
 from numpy import array, float32, percentile, vstack, append
@@ -14,10 +14,8 @@ from . import video_functions
 from . import evaluation
 
 def max_two_values(dct):
-	""" Return two keys with the highest value
-	"""
+	""" Return two keys with the highest value """
 	return list(sorted(dct, lambda x: d[x]))[-2:]
-
 
 def fill_gaps(sequence, lookahead):
 	"""
@@ -82,15 +80,14 @@ def query_episodes_with_faiss(videos, vectors_dir):
 		(video_file_name, [list with all distances best match on each frame])
 	"""
 
-	vector_files = [join(vectors_dir, vector + '.p') for vector in videos]
 	vectors = []
 
 	# the lengths of each vector, will be used to query each episode
 	lengths = []
 
 	# concatenate all the vectors into a single list multidimensional array
-	for path in vector_files:
-		with open(path, "rb") as vector_file:
+	for path in [join(vectors_dir, vector + '.p') for vector in videos]:
+		with open(path, 'rb') as vector_file:
 			episode_vectors = array(load(vector_file), float32)
 			lengths.append(episode_vectors.shape[0])
 			vectors.append(episode_vectors)
@@ -98,11 +95,10 @@ def query_episodes_with_faiss(videos, vectors_dir):
 	vectors = vstack(vectors)
 
 	results = []
-	for index, length in enumerate(lengths):
-		print("Querying {}".format(videos[i]))
-		index += 1
-		s = sum(lengths[:index-1])
-		e = sum(lengths[:index])
+	for index, _ in enumerate(lengths):
+		print(f" Querying {videos[i]}")
+		s = sum(lengths[:index])
+		e = sum(lengths[:index+1])
 
 		# query consists of one episode
 		query = vectors[s:e]
@@ -123,12 +119,10 @@ def query_episodes_with_faiss(videos, vectors_dir):
 
 		result = scores[:,0]
 		results.append((videos[index-1], result))
-
 	return results
 
 
-def detect(video_dir, feature_vector_function="CH", annotations = None, artifacts_dir = None, framejump = 3, percent = 10,
-		   resize_width = 320, video_start_threshold_percentile = 20, video_end_threshold_seconds = 15, min_detection_size_seconds = 15):
+def detect(video_dir, feature_vector_function = "CH", annotations = None, artifacts_dir = None, framejump = 3, percent = 10, resize_width = 320, video_start_threshold_percentile = 20, video_end_threshold_seconds = 15, min_detection_size_seconds = 15):
 	"""
 	The main function to call to detect recurring content. Resizes videos, converts to feature vectors
 	and returns the locations of recurring content within the videos.
@@ -181,17 +175,17 @@ def detect(video_dir, feature_vector_function="CH", annotations = None, artifact
 	if feature_vector_function == "CNN":
 		resize_width = 224
 
-	print("Starting detection")
-	print(f"Framejump: {framejump}")
-	print(f"Video width: {resize_width}")
-	print(f"Feature vector type: {feature_vector_function}")
+	print(" Starting detection")
+	print(f" Framejump:           {framejump}")
+	print(f" Video width:         {resize_width}")
+	print(f" Feature vector type: {feature_vector_function}")
 
 	# define the static directory names
-	resized_dir_name = "resized{}".format(resize_width)
-	feature_vectors_dir_name = "{}_feature_vectors_framejump{}".format(feature_vector_function,framejump)
+	resized_dir_name = f"resized{resize_width}"
+	feature_vectors_dir_name = f"{feature_vector_function}_feature_vectors_framejump{framejump}"
 
 	# the video files used for the detection
-	videos = [f for f in os.listdir(video_dir) if isfile(join(video_dir, f))]
+	videos = [f for f in listdir(video_dir) if isfile(join(video_dir, f))]
 	# make sure videos are sorted, use natural sort to correctly handle case of ep1 and ep10 in file names
 	videos = natsorted(videos, alg = ns.IGNORECASE)
 
@@ -216,11 +210,11 @@ def detect(video_dir, feature_vector_function="CH", annotations = None, artifact
 
 		# if there is no resized video yet, then resize it
 		if not isfile(file_resized):
-			print("Resizing {}".format(file))
+			print(f" Resizing {file}")
 			video_functions.resize(file_full, file_resized, resize_width)
 
 		# from the resized video, construct feature vectors
-		print("Converting {} to feature vectors".format(file))
+		print(f" Converting {file} to feature vectors")
 		featurevectors.construct_feature_vectors(
 			file_resized, feature_vectors_dir_name, feature_vector_function, framejump)
 
@@ -261,41 +255,39 @@ def detect(video_dir, feature_vector_function="CH", annotations = None, artifact
 
 			if (end - start > (min_detection_size_seconds * (framerate / framejump)) #only count detection when larger than min_detection_size_seconds seconds
 				and (occurs_at_beginning or ends_at_the_end)): #only use results that are in first part or end at last seconds
-
+		
 				start = start / (framerate / framejump)
 				end = end / (framerate / framejump)
-
+		
 				if occurs_at_beginning:
 					detected_beginning.append((start,end))
 				elif ends_at_the_end:
 					detected_end.append((start,end))
-
-
+		
 		detected = get_two_longest_timestamps(detected_beginning) + detected_end
-
-		print("Detections for: {}".format(video))
-		for start,end in detected:
-
-			print("{} \t \t - \t \t {}".format(to_time_string(start), to_time_string(end)))
+		
+		print(f" Detections for: {video}")
+		for start, end in detected:
+			print(f" {to_time_string(start)} - {to_time_string(end)}")
 		print()
-
+		
 		# evaluation
 		if annotations is not None:
 			ground_truths = evaluation.get_skippable_timestamps_by_filename(video, annotations)
 			relevant_seconds, detected_seconds, relevant_detected_seconds = evaluation.match_detections_precision_recall(
 				detected, ground_truths)
-
+		
 			total_relevant_seconds += relevant_seconds
 			total_detected_seconds += detected_seconds
 			total_relevant_detected_seconds += relevant_detected_seconds
-
+		
 		all_detections[video] = detected
 
 	if annotations is not None:
 		precision = total_relevant_detected_seconds / total_detected_seconds
 		recall = total_relevant_detected_seconds / total_relevant_seconds
 
-		print("Total precision = {0:.3f}".format(precision))
-		print("Total recall = {0:.3f}".format(recall))
+		print(f" Total precision = {precision:.3f}")
+		print(f" Total recall = {recall:.3f}")
 
 	return all_detections
