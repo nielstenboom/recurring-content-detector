@@ -97,13 +97,13 @@ def query_episodes_with_faiss(videos, vectors_dir):
 	results = []
 	for index, _ in enumerate(lengths):
 		print(f" Querying {videos[i]}")
-		s = sum(lengths[:index])
-		e = sum(lengths[:index+1])
+		start = sum(lengths[:index])
+		ed = sum(lengths[:index+1])
 
 		# query consists of one episode
-		query = vectors[s:e]
+		query = vectors[start:end]
 		# rest of the feature vectors
-		rest = append(vectors[:s], vectors[e:], axis = 0)
+		rest = append(vectors[:start], vectors[end:], axis = 0)
 
 		# build the faiss index, set vector size
 		vector_size = query.shape[1]
