@@ -5,7 +5,7 @@ import pickle
 import numpy as np
 from math import sqrt
 
-from . import keras_rmac
+# from . import keras_rmac
 
 
 def get_frame(frame_index, video):
@@ -53,9 +53,9 @@ def color_texture_moments(img):
     return result
 
 
-def cnn_feature_vectors(img):
-    feature_vector = keras_rmac.rmac.to_feature_vector(img)
-    return feature_vector
+# def cnn_feature_vectors(img):
+#     feature_vector = keras_rmac.rmac.to_feature_vector(img)
+#     return feature_vector
 
 
 def get_img_color_hist(image, binsize):
@@ -100,8 +100,8 @@ def construct_feature_vectors(video_fn, result_dir_name, vector_function, framej
         vector_function = color_hist
     elif vector_function == "CTM":
         vector_function = color_texture_moments
-    elif vector_function == "CNN":
-        vector_function = cnn_feature_vectors
+    # elif vector_function == "CNN":
+    #     vector_function = cnn_feature_vectors
 
     # make sure folder of experimentname exists or create otherwise
     os.makedirs(os.path.dirname(vectors_fn), exist_ok=True)

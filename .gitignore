@@ -3,7 +3,6 @@
 test/
 annotations.csv
 *.h5
-*.mp4
 *.p
 videos
 

@@ -204,6 +204,8 @@ def detect(video_dir, feature_vector_function="CH", annotations=None, artifacts_
 
     # the video files used for the detection
     videos = [f for f in os.listdir(video_dir) if os.path.isfile(os.path.join(video_dir, f))]
+    videos = [f for f in videos if video_functions.file_is_video(f)]
+    
     # make sure videos are sorted, use natural sort to correctly handle case of ep1 and ep10 in file names
     videos = natsorted(videos, alg=ns.IGNORECASE)
 
