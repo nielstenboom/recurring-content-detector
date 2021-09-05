@@ -9,7 +9,7 @@ WORKDIR /opt/recurring-content-detector
 
 RUN conda install python=3.6 -y && \
     pip install . && \
-    apt-get update && \
+    apt-get update --allow-releaseinfo-change && \
     apt-get install libglib2.0-0 -y && \
     apt-get install -y libsm6 libxext6 libxrender-dev -y && \
     apt-get install ffmpeg -y && \

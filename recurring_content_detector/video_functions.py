@@ -1,5 +1,14 @@
 import cv2
 import ffmpeg
+import mimetypes
+
+
+def file_is_video(video_fn):
+    """
+    Checks if the given file path actually is a video file
+    """
+    file_type = mimetypes.guess_type(video_fn)[0]
+    return file_type is not None and file_type.startswith("video")
 
 def get_framerate(video_fn):
     """
