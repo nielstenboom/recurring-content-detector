@@ -168,7 +168,7 @@ Total recall = 0.853
 
 There's a few tests in the test directory. They can also be run in the docker container, make sure you created a `videos` directory with some episodes in it:
 ```
-docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python -m pytest -s
+docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python -m pytest
 ```
  
 ## Credits
