@@ -1,6 +1,6 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e263d84692974d38a0678f3090a09187)](https://www.codacy.com/manual/nielstenboom/recurring-content-detector?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nielstenboom/recurring-content-detector&amp;utm_campaign=Badge_Grade)
-
 # Recurring content detector (credits, recaps and previews detection)
+
+**Update 05-09-2021: The CNN vectors were removed as they do not work on the Apple M1.**
 
 This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a VOD streaming service.
 
@@ -30,9 +30,8 @@ To install the package, do the following steps (assuming you have an anaconda se
 ```bash
 git clone https://github.com/nielstenboom/recurring-content-detector.git
 cd recurring-content-detector
-conda install faiss-cpu -c pytorch
+conda install faiss-cpu=1.6.3 -c pytorch
 pip install mkl
-# optional step: change parameters in recurring_content_detector/config.py
 pip install .
 ```
 
@@ -61,10 +60,9 @@ This will run the detection by building the color histogram feature vectors. Mak
 
 The feature vector function can also be changed:
 ```python
-# options for the function are ["CNN", "CH", "CTM"]
-rcd.detect("/directory/with/season/videofiles", feature_vector_function="CNN")
+# options for the function are ["CH", "CTM"]
+rcd.detect("/directory/with/season/videofiles", feature_vector_function="CTM")
 ```
-This will CNN vectors, which are a bit more accurate but take much longer to build.
 
 The `detect` function has many more parameters that can be tweaked, the defaults it has, are the parameters I got the best results with on my experiments.
 
@@ -166,13 +164,12 @@ Total recall = 0.853
 
 ## Tests
 
-There's a few tests in the test directory. They can also be run in the docker container, make sure you created a `videos` directory with some episodes in it:
+There's a few tests in the test directory. They can also be run in the docker container:
 ```
 docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python -m pytest
 ```
  
 ## Credits
-- https://github.com/noagarcia/keras_rmac for the CNN vectors 
 - https://github.com/facebookresearch/faiss for the efficient matching of the feature vectors 
 
 ## Final words
