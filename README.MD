@@ -19,7 +19,7 @@ print(results)
 ```
 Now you can run the detector by running the docker command:
 ```
-docker run -it -v $(pwd):/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python detect.py
+docker run -it -v "$(pwd)":/opt/recurring-content-detector nielstenboom/recurring-content-detector:latest python detect.py
 ```
 It'll first downsize the videos using ffmpeg, then it will convert the videos to feature vectors and then the algorithm for detecting the recurring content is applied, the `results` variable contains the intervals of all the recurring parts.
 
