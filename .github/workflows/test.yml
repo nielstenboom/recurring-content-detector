@@ -11,8 +11,7 @@ jobs:
 
     - uses: conda-incubator/setup-miniconda@v2
       with:
-        auto-update-conda: true
-        python-version: "3.6"
+        python-version: 3.6
     
     - run: |
         python --version
