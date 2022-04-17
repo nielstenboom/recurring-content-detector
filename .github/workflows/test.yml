@@ -20,5 +20,5 @@ jobs:
         conda install faiss-cpu=1.6.3 -c pytorch
         python --version
         pip install .
-        pip uninstall recurring_content_detector
+        pip uninstall recurring_content_detector -y
         python -m pytest
