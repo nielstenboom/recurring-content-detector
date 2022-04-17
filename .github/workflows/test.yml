@@ -20,4 +20,5 @@ jobs:
         conda install faiss-cpu=1.6.3 -c pytorch
         python --version
         pip install .
+        cd tests
         python -m pytest
