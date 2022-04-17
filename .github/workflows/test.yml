@@ -14,6 +14,7 @@ jobs:
         python-version: 3.6
     
     - run: |
+        conda install faiss-cpu=1.6.3 -c pytorch
         python --version
         pip install .
         python -m pytest
