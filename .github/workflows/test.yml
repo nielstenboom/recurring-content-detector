@@ -1,0 +1,19 @@
+name: 'test'
+on: 'pull_request'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: FedericoCarboni/setup-ffmpeg@v1
+      id: setup-ffmpeg
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        auto-update-conda: true
+        python-version: "3.6"
+    
+    - run: |
+        pip install .
+        python -m pytest
