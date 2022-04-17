@@ -18,9 +18,9 @@ jobs:
     
     - run: |
         conda install faiss-cpu=1.6.3 -c pytorch
-        apt-get update
-        apt-get install libglib2.0-0 -y
-        apt-get install libsm6 libxext6 libxrender-dev -y
+        sudo apt-get update
+        sudo apt-get install libglib2.0-0 -y
+        sudo apt-get install libsm6 libxext6 libxrender-dev -y
         pip install .
         pip uninstall recurring_content_detector -y
         python -m pytest -s
