@@ -11,7 +11,7 @@ jobs:
 
     - uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: 3.6
+        python-version: "3.6"
     
     - run: |
         conda install faiss-cpu=1.6.3 -c pytorch
