@@ -21,4 +21,4 @@ jobs:
         python --version
         pip install .
         pip uninstall recurring_content_detector -y
-        python -m pytest
+        python -m pytest -s
