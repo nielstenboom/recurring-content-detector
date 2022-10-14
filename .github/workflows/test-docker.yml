@@ -1,0 +1,19 @@
+# action.yml
+name: 'test-docker'
+on: 'pull_request'
+jobs:
+  test-docker:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Setup Docker buildx
+      uses: docker/setup-buildx-action@v1
+
+    - run: |
+        docker build -t testbuild .
+        docker run -v "$(pwd)":/app testbuild bash -c "cd /app && pytest"

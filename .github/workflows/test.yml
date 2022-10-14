@@ -14,13 +14,13 @@ jobs:
 
     - uses: conda-incubator/setup-miniconda@v2
       with:
-        python-version: "3.6"
+        python-version: "3.8"
     
     - run: |
         pip install .
         sudo apt-get update
         sudo apt-get install libglib2.0-0 -y
         sudo apt-get install libsm6 libxext6 libxrender-dev -y
-        conda install faiss-cpu=1.6.3 -c pytorch
+        conda install faiss-cpu=1.7.2 -c pytorch
         pip uninstall recurring_content_detector -y
         python -m pytest -s
