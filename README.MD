@@ -25,7 +25,7 @@ It'll first downsize the videos using ffmpeg, then it will convert the videos to
 
 ## Local Installation
 
-To install the package, do the following steps (assuming you have an anaconda setup with python 3.6) if you want to run the program with the default settings:
+To install the package, do the following steps (assuming you have an anaconda setup with python 3.8):
 
 ```bash
 git clone https://github.com/nielstenboom/recurring-content-detector.git

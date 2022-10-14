@@ -7,7 +7,7 @@ COPY setup.py /opt/recurring-content-detector/setup.py
 
 WORKDIR /opt/recurring-content-detector
 
-RUN conda install python=3.6 -y && \
+RUN conda install python=3.8 -y && \
     pip install . && \
     apt-get update --allow-releaseinfo-change && \
     apt-get install libglib2.0-0 -y && \
