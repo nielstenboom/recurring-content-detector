@@ -16,4 +16,4 @@ jobs:
 
     - run: |
         docker build -t testbuild .
-        docker run -v "$(pwd)":/app testbuild bash -c "cd /app && pytest /app/tests"
+        docker run -v "$(pwd)":/app testbuild bash -c "cd /app && pytest"
