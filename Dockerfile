@@ -8,7 +8,5 @@ COPY setup.py /opt/recurring-content-detector/setup.py
 WORKDIR /opt/recurring-content-detector
 
 RUN pip install . && \
-    apt-get update --allow-releaseinfo-change && \
-    apt-get install libglib2.0-0 -y && \
-    apt-get install -y libsm6 libxext6 libxrender-dev -y && \
+    apt-get update && \
     apt-get install ffmpeg -y
