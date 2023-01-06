@@ -1,4 +1,4 @@
-FROM continuumio/miniconda3:4.7.12
+FROM python:3.9
 
 WORKDIR /opt
 
@@ -7,12 +7,8 @@ COPY setup.py /opt/recurring-content-detector/setup.py
 
 WORKDIR /opt/recurring-content-detector
 
-RUN conda install python=3.8 -y && \
-    pip install . && \
+RUN pip install . && \
     apt-get update --allow-releaseinfo-change && \
     apt-get install libglib2.0-0 -y && \
     apt-get install -y libsm6 libxext6 libxrender-dev -y && \
-    apt-get install ffmpeg -y && \
-    conda install faiss-cpu=1.7.2 -c pytorch
-
-    
+    apt-get install ffmpeg -y

@@ -10,15 +10,16 @@ setup(name='recurring content detector',
       packages=find_packages(),
       include_package_data = True,
       install_requires=[
-          'Pillow==6.*',
+          'Pillow==9.*',
           'ffmpeg_python==0.*',
           'matplotlib==3.*',
           'opencv_python==4.*',
-          'pandas==0.*',
+          'pandas==1.*',
           'scipy==1.*',
           'tqdm==4.*',
           'natsort==6.*',
           'numpy==1.*',
-          'pytest==6.*'
+          'pytest==6.*',
+          'faiss-cpu==1.7.*'
       ],
       zip_safe=False)

@@ -12,15 +12,16 @@ jobs:
     - uses: FedericoCarboni/setup-ffmpeg@v1
       id: setup-ffmpeg
 
-    - uses: conda-incubator/setup-miniconda@v2
+    - uses: actions/setup-python@v4
       with:
-        python-version: "3.8"
-    
-    - run: |
-        pip install .
+        python-version: '3.9' 
+
+    - name: System dependencies
+      run: |
         sudo apt-get update
         sudo apt-get install libglib2.0-0 -y
         sudo apt-get install libsm6 libxext6 libxrender-dev -y
-        conda install faiss-cpu=1.7.2 -c pytorch
-        pip uninstall recurring_content_detector -y
+    
+    - run: |
+        pip install .
         python -m pytest -s

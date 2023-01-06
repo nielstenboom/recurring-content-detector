@@ -1,10 +1,6 @@
 # Recurring content detector (credits, recaps and previews detection)
 
-**Update 05-09-2021: The CNN vectors were removed as they do not work on the Apple M1.**
-
-This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a VOD streaming service.
-
-The experiments done in the master's thesis were done in jupyter notebooks, but as the code in these got quite messy. I packed the used code in a python package so that it can be re-used more easily.
+This repository contains the code that was used to conduct experiments for a [master's thesis](https://github.com/nielstenboom/masterthesis/raw/master/main.pdf). The goal was to detect recaps, opening credits, closing credits and previews from video files in an unsupervised manner. This can be used to automate the labeling for the skip functionality of a VOD streaming service for example.
 
 ## Quickstart with Docker
 
@@ -25,19 +21,16 @@ It'll first downsize the videos using ffmpeg, then it will convert the videos to
 
 ## Local Installation
 
-To install the package, do the following steps (assuming you have an anaconda setup with python 3.8):
+To install the package, do the following steps:
 
 ```bash
-git clone https://github.com/nielstenboom/recurring-content-detector.git
-cd recurring-content-detector
-conda install faiss-cpu=1.7.2 -c pytorch
 pip install mkl
-pip install .
+pip install git+https://github.com/nielstenboom/recurring-content-detector.git@v1.1.0
 ```
 
 It is also possible to build a docker container that does all the steps for you with the [Dockerfile](Dockerfile) in the directory.
 
-Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable and that [tensorflow](https://www.tensorflow.org/install/pip) (GPU version preferably) is installed.
+Make sure [ffmpeg](https://ffmpeg.org/) is in the PATH variable.
 
 Run `pip uninstall recurring-content-detector` to uninstall the package.
 
