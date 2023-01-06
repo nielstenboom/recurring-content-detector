@@ -25,7 +25,7 @@ To install the package, do the following steps:
 
 ```bash
 pip install mkl
-pip install git+https://github.com/nielstenboom/recurring-content-detector.git@v1.1.0
+pip install git+https://github.com/nielstenboom/recurring-content-detector.git@v1.1.1
 ```
 
 It is also possible to build a docker container that does all the steps for you with the [Dockerfile](Dockerfile) in the directory.
