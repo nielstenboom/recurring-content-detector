@@ -1,0 +1,24 @@
+name: 'test'
+on: 'pull_request'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Generate changelog
+      id: changelog
+      uses: metcalfc/changelog-generator@v4.0.1
+      with:
+        head-ref: 'niels/test-action'
+        base-ref: 'v1.0.0'
+
+    - name: Get the changelog
+      run: |
+        cat << "EOF"
+        ${{ steps.changelog.outputs.changelog }}
+        EOF
