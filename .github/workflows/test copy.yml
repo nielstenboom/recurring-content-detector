@@ -14,7 +14,7 @@ jobs:
 
     - name: Generate changelog
       id: changelog
-      uses: nielstenboom/changelog-generator@main
+      uses: nielstenboom/changelog-generator@b67566a1414b0b3522773de5ff47ab0551b754df
       with:
         myToken: ${{ secrets.GITHUB_TOKEN }}
         head-ref: 'niels/test-action'
