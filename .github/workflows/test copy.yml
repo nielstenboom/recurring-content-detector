@@ -17,7 +17,7 @@ jobs:
       uses: nielstenboom/changelog-generator@main
       with:
         myToken: ${{ secrets.GITHUB_TOKEN }}
-        head-ref: 'niels/test-action'
+        head-ref: 'origin/niels/test-action'
         base-ref: 'v1.0.0'
 
     - name: Get the changelog
