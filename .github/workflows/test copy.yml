@@ -14,7 +14,7 @@ jobs:
 
     - name: Generate changelog
       id: changelog
-      uses: metcalfc/changelog-generator@e032df570a1247a77fe9f2a7d003979181bc8bb1
+      uses: nielstenboom/changelog-generator
       with:
         myToken: ${{ secrets.GITHUB_TOKEN }}
         head-ref: 'niels/test-action'
