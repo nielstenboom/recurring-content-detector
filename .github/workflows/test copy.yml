@@ -14,7 +14,7 @@ jobs:
       id: changelog
       uses: metcalfc/changelog-generator@v4.0.1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        myToken: ${{ secrets.GITHUB_TOKEN }}
         head-ref: 'niels/test-action'
         base-ref: 'v1.0.0'
 
