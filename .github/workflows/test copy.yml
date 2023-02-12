@@ -11,7 +11,7 @@ jobs:
 
     - name: Generate changelog
       id: changelog
-      uses: nielstenboom/semantic-changelog-generator@main
+      uses: nielstenboom/semantic-changelog-generator@v1
       with:
         base: 'v0.1.0'
         head: 'origin/niels/test-action'
