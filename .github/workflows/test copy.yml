@@ -3,9 +3,6 @@ on: 'pull_request'
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash -l {0}
     steps:
 
     - uses: actions/checkout@v3
@@ -14,11 +11,10 @@ jobs:
 
     - name: Generate changelog
       id: changelog
-      uses: nielstenboom/changelog-generator@main
+      uses: nielstenboom/semantic-changelog-generator@main
       with:
-        myToken: ${{ secrets.GITHUB_TOKEN }}
-        head-ref: 'v0.1.0'
-        base-ref: 'v1.0.0'
+        base: 'v0.1.0'
+        head: 'v1.0.0'
 
     - name: Get the changelog
       run: |
