@@ -19,6 +19,7 @@ jobs:
         myToken: ${{ secrets.GITHUB_TOKEN }}
         head-ref: 'origin/niels/test-action'
         base-ref: 'v1.0.0'
+        fetch: false
 
     - name: Get the changelog
       run: |
