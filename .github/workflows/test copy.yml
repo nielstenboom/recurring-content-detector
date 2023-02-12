@@ -14,7 +14,7 @@ jobs:
       uses: nielstenboom/semantic-changelog-generator@main
       with:
         base: 'v0.1.0'
-        head: 'v1.0.0'
+        head: 'niels/test-action'
 
     - name: Get the changelog
       run: |
