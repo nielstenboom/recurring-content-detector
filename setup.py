@@ -20,6 +20,6 @@ setup(name='recurring content detector',
           'natsort==6.*',
           'numpy==1.*',
           'pytest==6.*',
-          'faiss-cpu==1.7.*'
+          'faiss-cpu==1.9.*'
       ],
       zip_safe=False)
